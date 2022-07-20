@@ -15,7 +15,7 @@ SuperLogger logger = new SuperLogger("[prefix of the log]", SurroundKey.[type of
 2- Create the log : 
 ```java 
 
-logger.log();
+logger.log()
 
 ```
 
@@ -29,10 +29,18 @@ log.getSurroundKey()
 
 log.getArgs()
 
+log.getColor()
+
+log.getLogFilePath();
+
 log.setPrefix("[new prefix]")
 
 log.setSurroundKey(SurroundKey.[new SurroundKey])
 
 log.setArgs("[new log]")
+
+log.setColor(AnsiConsoleTextColors.[set new color])
+
+log.setNewLogFilePath("[just the path |you don't need to put a filename, it will do it automatically|]")
 
 ```
