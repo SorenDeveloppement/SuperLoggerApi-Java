@@ -27,12 +27,12 @@ log.getPrefix()
 
 log.getSurroundKey()
 
-log.getLog()
+log.getArgs()
 
 log.setPrefix("[new prefix]")
 
 log.setSurroundKey(SurroundKey.[new SurroundKey])
 
-log.setPrefix("[new log]")
+log.setArgs("[new log]")
 
 ```
