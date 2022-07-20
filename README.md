@@ -8,7 +8,7 @@ It's very simple, you just need to do thats steps :
 1 - Create a variable with type : SuperLogger
 ```java
 
-SuperLogger logger = new SuperLogger("[prefix of the log]", SurroundKey.[type of surround], "the log");
+SuperLogger logger = new SuperLogger("[prefix of the log]", SurroundKey.[type of surround], "the log", AnsiConsoleTextColors.[color], "path");
 
 ```
 
@@ -18,6 +18,8 @@ SuperLogger logger = new SuperLogger("[prefix of the log]", SurroundKey.[type of
 logger.log()
 
 ```
+
+You don't need to use ```java logger.logInFile("", "")``` because wrote to the log file is automaticaly
 
 You can get and set new prefix, surround & log with : 
 
