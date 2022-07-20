@@ -18,3 +18,21 @@ SuperLogger logger = new SuperLogger("[prefix of the log]", SurroundKey.[type of
 logger.log();
 
 ```
+
+You can get and set new prefix, surround & log with : 
+
+```java
+
+log.getPrefix()
+
+log.getSurroundKey()
+
+log.getLog()
+
+log.setPrefix("[new prefix]")
+
+log.setSurroundKey(SurroundKey.[new SurroundKey])
+
+log.setPrefix("[new log]")
+
+```
