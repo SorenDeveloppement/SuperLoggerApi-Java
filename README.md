@@ -19,7 +19,7 @@ logger.log()
 
 ```
 
-You don't need to use ```java logger.logInFile("", "")``` because wrote to the log file is automaticaly
+You don't need to use ```logger.logInFile("", "")``` because wrote to the log file is automaticaly
 
 You can get and set new prefix, surround & log with : 
 
