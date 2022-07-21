@@ -2,23 +2,23 @@ package fr.galaglow.superloggerapi.utils;
 
 public enum AnsiConsoleTextColors {
 	
-	BASIC(""),
+	BASIC("\033[0;37m "),
 	
-	BLACK("\u001B[30m"),
-	
+	BLACK("\033[0;30m "),
+
 	RED("\u001B[31m"),
-	
-	GREEN("\u001B[32m"),
-	
-	YELLOW("\u001B[33m"),
-	
-	 BLUE("\u001B[34m"),
-	
-	 PURPLE("\u001B[35m"),
-	
-	CYAN("\u001B[36m"),
-	
-	WHITE( "\u001B[37m");
+
+    GREEN("\033[0;32m "),
+
+    YELLOW("\033[0;33m "),
+
+    BLUE("\033[0;34m "), 
+    
+    MAGENTA("\033[0;35m "),
+
+    CYAN("\033[0;36m "),
+
+    WHITE("\033[0;37m ");
 	
 	private final String ansiColor;
 

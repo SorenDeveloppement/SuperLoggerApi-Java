@@ -1,18 +1,37 @@
 package fr.galaglow.superloggerapi;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import fr.galaglow.superloggerapi.utils.AnsiConsoleTextColors;
 import fr.galaglow.superloggerapi.utils.SurroundKey;
 
 public class SuperLogger {
 	
-	public String prefix, args, path;
-	public SurroundKey surroundKey;
-	public AnsiConsoleTextColors aColor;
+	private String prefix, args, path;
+	private SurroundKey surroundKey;
+	private AnsiConsoleTextColors aColor;
+	
+	private Date date = new Date();
+	
+	private final File folder;
+	private final File file;
+	
+	private final List<String> lines;
+	
+	private BufferedWriter bw;
+	private BufferedReader br;
 	
 	public static final String FILE_EXTENSION = ".slog";
 	
@@ -23,6 +42,9 @@ public class SuperLogger {
 		this.args = args;
 		this.aColor = aColor;
 		this.path = path;
+		this.lines = new ArrayList<>();
+		this.folder = new File(this.path);
+		this.file = new File(folder.getAbsolutePath(), date.getDate() + "-" + date.getMonth() + "-"+ date.getYear() + "_" +  date.getHours() + "h" + FILE_EXTENSION);
 		
 		System.out.println("Thanks for using SuperLoggerApi !");
 		
@@ -41,57 +63,93 @@ public class SuperLogger {
 		String closedHugs = "}}";
 		String doublePoint = "::";
 		
-		if (surroundKey.equals(SurroundKey.BACK_SLASH)) {
-			System.out.println(this.aColor + backSlash + prefix + backSlash + args + "\u001B[0m");
+		switch (surroundKey) {
+		case BACK_SLASH:
+			System.out.println(this.aColor.getAnsiColor() + backSlash + prefix + backSlash + args + "\033[0;37m");
 			logInFile(backSlash, backSlash);
-		} else if (surroundKey.equals(SurroundKey.SLASH)) {
-			System.out.println(this.aColor + slash + prefix + slash + args + "\u001B[0m");
+			break;
+		case SLASH:
+			System.out.println(this.aColor.getAnsiColor() + slash + prefix + slash + args + " \033[0;37m");
 			logInFile(slash, slash);
-		} else if (surroundKey.equals(SurroundKey.BAR)) {
-			System.out.println(this.aColor + bar + prefix + bar + args + "\u001B[0m");
+			break;
+		case BAR:
+			System.out.println(this.aColor.getAnsiColor() + bar + prefix + bar + args +" \033[0;37m");
 			logInFile(bar, bar);
-		} else if (surroundKey.equals(SurroundKey.PARENTHESES)) {
-			System.out.println(this.aColor + openedPar + prefix + closedPar + args + "\u001B[0m");
+			break;
+		case PARENTHESES:
+			System.out.println(this.aColor.getAnsiColor() + openedPar + prefix + closedPar + args + " \033[0;37m");
 			logInFile(openedPar, closedPar);
-		}  else if (surroundKey.equals(SurroundKey.HOOKS)) {
-			System.out.println(this.aColor + openedHooks + prefix + closedHooks + args + "\u001B[0m");
+		case HOOKS:
+			System.out.println(this.aColor.getAnsiColor() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
 			logInFile(openedHooks, closedHooks);
-		} else if (surroundKey.equals(SurroundKey.HUGS)) {
-			System.out.println(this.aColor + openedHugs + prefix + closedHugs + args + "\u001B[0m");
+			break;
+		case HUGS:
+			System.out.println(this.aColor.getAnsiColor() + openedHugs + prefix + closedHugs + args + " \033[0;37m");
 			logInFile(openedHugs, closedHugs);
-		} else {
-			System.out.println(this.aColor + doublePoint + prefix + doublePoint + args + "\u001B[0m");
+			break;
+		case DOUBLE_POINT:
+			System.out.println(this.aColor.getAnsiColor() + doublePoint + prefix + doublePoint + args +" \033[0;37m");
 			logInFile(doublePoint, doublePoint);
+		default:
+			System.out.println(this.aColor.getAnsiColor() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
+			logInFile(openedHooks, closedHooks);
+			break;
 		}
 		
 	}
 	
+	private void resetBufferedReader() {
+        try {
+            this.br.close();
+            this.br = new BufferedReader(new InputStreamReader(Files.newInputStream(this.file.toPath()), StandardCharsets.UTF_8));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+	
 	@SuppressWarnings("deprecation")
 	public void logInFile(String sKey1, String sKey2) {
-		
-		Date date = new Date();
-		
-		 final File dir = new File(this.path + date.getDay() + "-" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + FILE_EXTENSION);
-		
-		 try {
-		      if (dir.createNewFile()) {
-		    	  System.out.println("File created: " + dir.getName());
-		      }
-		    } catch (IOException e) {
-		    	System.out.println("An error occurred.");
-		    	e.printStackTrace();
-		    }
-		 
-		 try {
-			 FileWriter logWriter = new FileWriter(this.path + date.getDay() + "-" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + FILE_EXTENSION);
-			 logWriter.write(sKey1 + prefix + sKey2 + args + "\u001B[0m");
-			 logWriter.close();
-			 System.out.println("Successfully wrote to the file.");
-		 } catch (IOException e) {
-		    	System.out.println("An error occurred during the wrote to the file.");
-		    	e.printStackTrace();
-		 }
-		
+		try {	        
+	        if(!folder.exists()) {
+	            folder.mkdir();
+	        }
+
+	        if(!file.exists()) {
+	            try {
+	                file.createNewFile();
+	            } catch(IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        try {
+	        	this.br = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+	        	
+	        	String line;
+	            line = br.readLine();
+	        	
+	        	while(line != null) {
+	                lines.add(line);
+	                line = br.readLine();
+	            }
+	        	
+	        	lines.add(sKey1 + prefix + sKey2 + args);
+	        	
+	        	this.bw =  new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(file.toPath()), StandardCharsets.UTF_8));
+	            
+	            for(String l : lines) {
+	                bw.write(l);
+	                bw.newLine();
+	            }
+	            this.resetBufferedReader();
+	            bw.flush();
+	            
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error during the creation of the file / folder");
+		}
 	}
 	
 	public String getPrefix() {
