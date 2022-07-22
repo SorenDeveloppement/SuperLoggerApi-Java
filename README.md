@@ -46,3 +46,12 @@ log.setColor(AnsiConsoleTextColors.[set new color])
 log.setNewLogFilePath("[just the path |you don't need to put a filename, it will do it automatically|]")
 
 ```
+
+Also, you can find character strings in your logs by doing:
+
+```java
+
+LogReader logReader = new LogReader("[here, the path where your logs diles are]", "[the string you want to search]");
+System.out.println(logReader.checkWordInFile());
+
+```
