@@ -51,7 +51,7 @@ Also, you can find character strings in your logs by doing:
 
 ```java
 
-LogReader logReader = new LogReader("[here, the path where your logs diles are]", "[the string you want to search]");
+LogReader logReader = new LogReader("[here, the path where your logs files are]", "[the string you want to search]");
 System.out.println(logReader.checkWordInFile());
 
 ```
