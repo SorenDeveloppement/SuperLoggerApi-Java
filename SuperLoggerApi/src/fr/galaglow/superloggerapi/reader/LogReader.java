@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import fr.galaglow.superloggerapi.SuperLogger;
 import fr.galaglow.superloggerapi.utils.Pair;
@@ -30,7 +31,7 @@ public class LogReader {
 	}
 
 	public void getFileExtension() {
-		for (File file : folder.listFiles()) {
+		for (File file : Objects.requireNonNull(folder.listFiles())) {
 			if (file.isFile()) {
 				if (file.getAbsolutePath().endsWith(SuperLogger.FILE_EXTENSION)) {
 					files.add(file);
@@ -43,7 +44,7 @@ public class LogReader {
 	public HashMap<String, String> checkWordInFile() {
 		getFileExtension();
 
-		try {        	
+		try {
 			for (File file : files) {
 				String line;
 				final BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));

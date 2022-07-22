@@ -65,37 +65,36 @@ public class SuperLogger {
 
 		switch (surroundKey) {
 		case BACK_SLASH:
-			System.out.println(this.aColor.getAnsiColor() + backSlash + prefix + backSlash + args + "\033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + backSlash + prefix + backSlash + args + "\033[0;37m");
 			logInFile(backSlash, backSlash);
 			break;
 		case SLASH:
-			System.out.println(this.aColor.getAnsiColor() + slash + prefix + slash + args + " \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + slash + prefix + slash + args + " \033[0;37m");
 			logInFile(slash, slash);
 			break;
 		case BAR:
-			System.out.println(this.aColor.getAnsiColor() + bar + prefix + bar + args +" \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + bar + prefix + bar + args +" \033[0;37m");
 			logInFile(bar, bar);
 			break;
 		case PARENTHESES:
-			System.out.println(this.aColor.getAnsiColor() + openedPar + prefix + closedPar + args + " \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + openedPar + prefix + closedPar + args + " \033[0;37m");
 			logInFile(openedPar, closedPar);
 		case HOOKS:
-			System.out.println(this.aColor.getAnsiColor() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
 			logInFile(openedHooks, closedHooks);
 			break;
 		case HUGS:
-			System.out.println(this.aColor.getAnsiColor() + openedHugs + prefix + closedHugs + args + " \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + openedHugs + prefix + closedHugs + args + " \033[0;37m");
 			logInFile(openedHugs, closedHugs);
 			break;
 		case DOUBLE_POINT:
-			System.out.println(this.aColor.getAnsiColor() + doublePoint + prefix + doublePoint + args +" \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + doublePoint + prefix + doublePoint + args +" \033[0;37m");
 			logInFile(doublePoint, doublePoint);
 		default:
-			System.out.println(this.aColor.getAnsiColor() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
+			System.out.println(this.aColor.getAnsiColor() + date.getTime() + openedHooks + prefix + closedHooks + args +" \033[0;37m");
 			logInFile(openedHooks, closedHooks);
 			break;
 		}
-
 	}
 
 	private void resetBufferedReader() {
